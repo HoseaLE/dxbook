@@ -26,7 +26,7 @@ export default function Home({ data }: Props) {
                     <Breadcrumb.Item>分类</Breadcrumb.Item>
                 </Breadcrumb>
             </div>
-            <div>
+            <div className={styles.main}>
                 {data.map((item) => {
                     return (
                         <Tag style={{ marginBottom: 8 }}>

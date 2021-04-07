@@ -36,7 +36,7 @@ export default function Home({ data, pre, next }: Props) {
     return (
         <Layout seo={seo}>
             {data && (
-                <>
+                <div className={styles.contanier}>
                     <div className={styles.head}>
                         <Breadcrumb>
                             <Breadcrumb.Item>
@@ -82,7 +82,7 @@ export default function Home({ data, pre, next }: Props) {
                     </div>
 
                     <br />
-                </>
+                </div>
             )}
         </Layout>
     );

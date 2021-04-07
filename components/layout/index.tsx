@@ -12,6 +12,7 @@ export default function Layout({ children, seo = {} }: Props) {
     return (
         <>
             <NextSeo {...seo} />
+            <div className={styles.bg}></div>
             <div className={styles.main}>
                 {children}
                 <BackTop />

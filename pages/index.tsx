@@ -4,6 +4,7 @@ import ListItem from "@components/listItem";
 import Link from "next/link";
 import styles from "./index.less";
 import config from "@config/config";
+import { Affix } from "antd";
 
 const { siteName } = config;
 
@@ -18,27 +19,31 @@ export default function Home({ cateList, bookList }: Props) {
     };
     return (
         <Layout seo={seo}>
-            <div className={styles.head}>
-                <div style={{ padding: 10 }}>
-                    <Link href={`/`}>
-                        <a>首页</a>
-                    </Link>
+            <Affix offsetTop={0}>
+                <div className={styles.head}>
+                    <div style={{ padding: 10 }}>
+                        <Link href={`/`}>
+                            <a>首页</a>
+                        </Link>
+                    </div>
+                    {cateList.map((item) => {
+                        return (
+                            <div className={styles.nav_item}>
+                                <Link href={`/category/${item["cate-slug"]}`}>
+                                    <a>{item.title}</a>
+                                </Link>
+                            </div>
+                        );
+                    })}
+                    <div className={styles.nav_item}>
+                        <Link href={`/category`}>
+                            <a style={{ color: "#eee", cursor: "default" }}>
+                                更多
+                            </a>
+                        </Link>
+                    </div>
                 </div>
-                {cateList.map((item) => {
-                    return (
-                        <div className={styles.nav_item}>
-                            <Link href={`/category/${item["cate-slug"]}`}>
-                                <a>{item.title}</a>
-                            </Link>
-                        </div>
-                    );
-                })}
-                <div className={styles.nav_item}>
-                    <Link href={`/category`}>
-                        <a style={{color: '#eee', cursor: 'default'}}>更多</a>
-                    </Link>
-                </div>
-            </div>
+            </Affix>
             <div className={styles.content}>
                 {bookList.map((item) => {
                     return (
@@ -54,6 +59,7 @@ export default function Home({ cateList, bookList }: Props) {
                     );
                 })}
             </div>
+            <br />
         </Layout>
     );
 }

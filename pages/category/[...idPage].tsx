@@ -36,7 +36,7 @@ export default function Home({ data, total, page }: Props) {
     return (
         <Layout seo={seo}>
             {data && data.length > 0 && (
-                <>
+                <div className={styles.container}>
                     <div className={styles.head}>
                         <Breadcrumb>
                             <Breadcrumb.Item>
@@ -64,16 +64,16 @@ export default function Home({ data, total, page }: Props) {
                                 />
                             );
                         })}
-                    </div>
 
-                    <Pagination
-                        current={page}
-                        total={total}
-                        createPath={createPath}
-                    />
-                    <br />
-                </>
+                        <Pagination
+                            current={page}
+                            total={total}
+                            createPath={createPath}
+                        />
+                    </div>
+                </div>
             )}
+            <br />
         </Layout>
     );
 }
