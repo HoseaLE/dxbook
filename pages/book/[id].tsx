@@ -24,11 +24,11 @@ export default function Home({ data, pre, next }: Props) {
     }
 
     const seo = {
-        title: `${data.title}、pdf下载 - ${siteName}`,
+        title: `${data.title}、${data.title}pdf下载 - ${siteName}`,
         description: data.description,
         openGraph: {
             url: `${NEXT_PUBLIC_ROUTE_BASE}/book/${data._id}`,
-            title: `${data.title}、pdf下载 - ${siteName}`,
+            title: `${data.title}、${data.title}pdf下载 - ${siteName}`,
             description: data.description,
         },
     };
@@ -52,18 +52,17 @@ export default function Home({ data, pre, next }: Props) {
                             <Breadcrumb.Item>{data.title}</Breadcrumb.Item>
                         </Breadcrumb>
                     </div>
+
                     <div className={styles.left}>
                         <h2>{data.title}</h2>
-                        <Contact />
-                        <br />
                         <div
                             dangerouslySetInnerHTML={{
                                 __html: data.content && marked(data.content),
                             }}
                         ></div>
-                        <Contact style={{ color: "red" }} />
+                        <Contact style={{ fontWeight: 700 }} />
 
-                        <div style={{marginTop: 10}}>
+                        <div style={{ marginTop: 10 }}>
                             <span>上一篇：</span>
                             {pre && (
                                 <Link href={`/book/${pre._id}`}>
@@ -93,7 +92,8 @@ export async function getServerSideProps(context) {
     const { id } = params;
     const { db } = await connectToDatabase();
     const book = db.collection("book");
-    let bookList = await book.find({ _id: new ObjectId(id) }).toArray();
+    const getBook = async () =>
+        await book.find({ _id: new ObjectId(id) }).toArray();
 
     // 上一篇 下一篇
     const getPre = async () => {
@@ -112,7 +112,7 @@ export async function getServerSideProps(context) {
     };
     let pre = null;
     let next = null;
-    const res = await Promise.all([getPre(), getNext()]);
+    const res = await Promise.all([getPre(), getNext(), getBook()]);
 
     if (res[0] && res[0].length > 0) {
         pre = handeId(res[0])[0];
@@ -121,14 +121,16 @@ export async function getServerSideProps(context) {
         next = handeId(res[1])[0];
     }
 
+    let bookList = res[2] || [];
+
     bookList = handeId(bookList);
     const data = bookList[0];
     if (data) {
-        const str = data.content.replace(/\n/g, "\n\n");
+        const str = data.content;
 
         const len = str.length;
         let newstr = "";
-        const keyword = ` ${data.title}.pdf下载 `;
+        const keyword = ` ${data.title}pdf `;
         if (len > 100) {
             newstr = str.slice(0, 80) + keyword + str.slice(50) + keyword;
         }

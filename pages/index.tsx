@@ -37,7 +37,7 @@ export default function Home({ cateList, bookList }: Props) {
                     })}
                     <div className={styles.nav_item}>
                         <Link href={`/category`}>
-                            <a style={{ color: "#eee", cursor: "default" }}>
+                            <a>
                                 更多
                             </a>
                         </Link>
@@ -73,7 +73,7 @@ export async function getStaticProps() {
 
     let ls = handeId(list);
 
-    const needs = ["建筑书籍", "机械书籍", "材料书籍", "食品书籍"];
+    const needs = ["建筑", "机械", "材料", "食品"];
     ls = ls.filter((item) => needs.includes(item.title));
 
     let bookList = await book
