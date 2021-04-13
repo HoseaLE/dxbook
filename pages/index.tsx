@@ -79,7 +79,8 @@ export async function getStaticProps() {
     let bookList = await book
         .find({ "cate-title": "机械书籍" })
         .sort({ _id: -1 })
-        .limit(30)
+        .skip(20)
+        .limit(20)
         .toArray();
     bookList = handeId(bookList);
     return {
