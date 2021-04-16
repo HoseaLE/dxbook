@@ -98,14 +98,16 @@ export async function getServerSideProps(context) {
     // 上一篇 下一篇
     const getPre = async () => {
         return await book
-            .find({ _id: { $gt: new ObjectId(id) } }, { title: 1 })
+            .find({ _id: { $gt: new ObjectId(id) } })
+            .project({title: 1})
             .sort({ _id: 1 })
             .limit(1)
             .toArray();
     };
     const getNext = async () => {
         return await book
-            .find({ _id: { $lt: new ObjectId(id) } }, { title: 1 })
+            .find({ _id: { $lt: new ObjectId(id) } })
+            .project({title: 1})
             .sort({ _id: -1 })
             .limit(1)
             .toArray();
