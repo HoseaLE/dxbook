@@ -10,6 +10,7 @@ export default async function handler(req, res) {
     const listFn = async () => {
         return await book
             .find({ "cate-slug": id })
+            .project({'cate-title': 1, description: 1, title: 1})
             .sort({ _id: -1 })
             .skip((page - 1) * 10)
             .limit(10)
